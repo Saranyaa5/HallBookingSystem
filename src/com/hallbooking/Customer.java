@@ -1,0 +1,120 @@
+package com.hallbooking;
+import java.util.*;
+
+public class Customer extends User {
+    private static HashMap<String, Customer> customerData = new HashMap<>();
+
+    public Customer(String name, String userId, String email, String password) {
+        super(name, userId, email, password);
+    }
+
+    public void customerMenu(Scanner sc) {
+        while (true) {
+            System.out.println("1. Register\n2. Login\n3. Exit");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    register(sc);
+                    break;
+                case 2:
+                    login(sc);
+                    break;
+                case 3:
+                    System.out.println("Exiting customer section...");
+                    return;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        }
+    }
+
+    private void register(Scanner sc) {
+        System.out.println("Enter Name: ");
+        String name = sc.nextLine();
+        System.out.println("Enter User ID: ");
+        String userId = sc.nextLine();
+        System.out.println("Enter Email: ");
+        String email = sc.nextLine();
+
+        if (customerData.containsKey(email)) {
+            System.out.println("Email already registered. Please login.");
+            login(sc);
+            return; 
+        }
+
+        System.out.println("Enter Password: ");
+        String password = sc.nextLine();
+
+        Customer newCustomer = new Customer(name, userId, email, password);
+        customerData.put(email, newCustomer);
+        // Notification.sendEmail(email, "Registration Successful", "Welcome, " + name + "! Your registration is successful.");
+
+        System.out.println("Registration successful! Please login.");
+        login(sc);
+    }
+
+    private void login(Scanner sc) {
+        while (true) {
+            System.out.println("Enter Email: ");
+            String email = sc.nextLine();
+            System.out.println("Enter Password: ");
+            String password = sc.nextLine();
+
+            Customer existingCustomer = customerData.get(email);
+            if (existingCustomer != null && existingCustomer.authenticate(password)) {
+                System.out.println("Login Successful! Welcome, " + existingCustomer.name);
+                customerFunctionality(sc);
+                return; 
+            } else {
+                System.out.println("Incorrect credentials. Try again.");
+                System.out.println("1. Register\n2. Try Login Again");
+                int choice = sc.nextInt();
+                sc.nextLine();
+
+                if (choice == 1) {
+                    register(sc);
+                    return; 
+                }
+            }
+        }
+    }
+
+    public void customerFunctionality(Scanner sc) {
+        while (true) {
+            System.out.println("\nChoose an option:");
+            System.out.println("1. Search Hall");
+            System.out.println("2. Book Hall using Hall ID");
+            System.out.println("3. Cancel Booked Hall");
+            System.out.println("4. Make Payment");
+            System.out.println("5. Logout");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Searching halls...");
+                    
+                    break;
+                case 2:
+                    System.out.println("Booking a hall...");
+                    
+                    break;
+                case 3:
+                    System.out.println("Cancelling a booking...");
+                    
+                    break;
+                case 4:
+                    System.out.println("Processing payment...");
+                  
+                    break;
+                case 5:
+                    System.out.println("Logging out...");
+                    return;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        }
+    }
+}
