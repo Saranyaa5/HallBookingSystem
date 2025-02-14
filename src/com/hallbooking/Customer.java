@@ -49,8 +49,6 @@ public class Customer extends User {
 
         Customer newCustomer = new Customer(name, userId, email, password);
         customerData.put(email, newCustomer);
-        // Notification.sendEmail(email, "Registration Successful", "Welcome, " + name + "! Your registration is successful.");
-
         System.out.println("Registration successful! Please login.");
         login(sc);
     }
