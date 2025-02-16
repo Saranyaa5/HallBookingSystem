@@ -16,4 +16,16 @@ public class User {
     public boolean authenticate(String enteredPassword) {
         return this.password.equals(enteredPassword);
     }
+
+    public String getUserName() {
+        return name;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUserEmail() {
+        return email;
+    }
 }

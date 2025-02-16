@@ -2,7 +2,7 @@ package com.hallbooking;
 import java.util.*;
 
 public class Customer extends User {
-    private static HashMap<String, Customer> customerData = new HashMap<>();
+    private static HashMap<String, Customer> customerData = new HashMap<>(); // Key should be userId
 
     public Customer(String name, String userId, String email, String password) {
         super(name, userId, email, password);
@@ -31,55 +31,45 @@ public class Customer extends User {
     }
 
     private void register(Scanner sc) {
-        System.out.println("Enter Name: ");
+        System.out.print("Enter Name: ");
         String name = sc.nextLine();
-        System.out.println("Enter User ID: ");
+        System.out.print("Enter User ID: ");
         String userId = sc.nextLine();
-        System.out.println("Enter Email: ");
+        System.out.print("Enter Email: ");
         String email = sc.nextLine();
 
-        if (customerData.containsKey(email)) {
-            System.out.println("Email already registered. Please login.");
-            login(sc);
-            return; 
+        if (customerData.containsKey(userId)) {
+            System.out.println("User ID already taken. Try another one.");
+            return;
         }
 
-        System.out.println("Enter Password: ");
+        System.out.print("Enter Password: ");
         String password = sc.nextLine();
 
         Customer newCustomer = new Customer(name, userId, email, password);
-        customerData.put(email, newCustomer);
-        System.out.println("Registration successful! Please login.");
-        login(sc);
+        customerData.put(userId, newCustomer);
+        System.out.println("✅ Registration successful! Please login.");
     }
 
     private void login(Scanner sc) {
         while (true) {
-            System.out.println("Enter Email: ");
-            String email = sc.nextLine();
-            System.out.println("Enter Password: ");
+            System.out.print("Enter User ID: ");
+            String userId = sc.nextLine();
+            System.out.print("Enter Password: ");
             String password = sc.nextLine();
 
-            Customer existingCustomer = customerData.get(email);
+            Customer existingCustomer = customerData.get(userId);
             if (existingCustomer != null && existingCustomer.authenticate(password)) {
-                System.out.println("Login Successful! Welcome, " + existingCustomer.name);
-                customerFunctionality(sc);
-                return; 
+                System.out.println("✅ Login Successful! Welcome, " + existingCustomer.name);
+                customerFunctionality(sc, existingCustomer);
+                return;
             } else {
-                System.out.println("Incorrect credentials. Try again.");
-                System.out.println("1. Register\n2. Try Login Again");
-                int choice = sc.nextInt();
-                sc.nextLine();
-
-                if (choice == 1) {
-                    register(sc);
-                    return; 
-                }
+                System.out.println("❌ Incorrect credentials. Try again.");
             }
         }
     }
 
-    public void customerFunctionality(Scanner sc) {
+    public void customerFunctionality(Scanner sc, Customer customer) {
         while (true) {
             System.out.println("\nChoose an option:");
             System.out.println("1. Search Hall");
@@ -91,32 +81,36 @@ public class Customer extends User {
             sc.nextLine();
 
             switch (choice) {
-                case 1:
-                    System.out.println("Searching halls...");
-                    search(sc);
-                    break;
-                case 2:
-                    System.out.println("Booking a hall...");
-                    
-                    break;
-                case 3:
-                    System.out.println("Cancelling a booking...");
-                    
-                    break;
-                case 4:
-                    System.out.println("Processing payment...");
-                  
-                    break;
-                case 5:
+                case 1 -> search(sc);
+                case 2 -> booking(sc, customer);
+                case 3 -> cancelBooking(sc, customer);
+                case 4 -> System.out.println("Processing payment...");
+                case 5 -> {
                     System.out.println("Logging out...");
                     return;
-                default:
-                    System.out.println("Invalid choice! Try again.");
+                }
+                default -> System.out.println("Invalid choice! Try again.");
             }
         }
     }
 
-    private void search(Scanner sc) {
+    private void booking(Scanner sc, Customer customer) {
+        Booking book = new Booking();
+        boolean bookingSuccess = book.bookHall(sc, customer);
+
+        if (bookingSuccess) {
+            System.out.println("✅ Booking confirmed!");
+        } else {
+            System.out.println("❌ Booking failed. The hall might already be booked.");
+        }
+    }
+
+    private void cancelBooking(Scanner sc, Customer customer) {
+        Booking booking = new Booking();
+        booking.cancelBooking(sc, customer);
+    }
+
+	private void search(Scanner sc) {
         HallSearch search = new HallSearch();
 
         while (true) {

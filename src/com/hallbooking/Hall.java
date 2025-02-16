@@ -1,5 +1,6 @@
 package com.hallbooking;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Hall {
@@ -42,9 +43,19 @@ public class Hall {
     public boolean isAvailableOn(String date) {
         return availableDates.contains(date);
     }
+    
+    public Set<String> getAvailableDates(){
+    	return availableDates;
+    }
+ 
 
+
+    public void addAvailableDate(String date) {
+        availableDates.add(date);
+    }
     @Override
     public String toString() {
         return "Hall ID: " + hallId + ", Name: " + name + ", Capacity: " + capacity + ", Location: " + location + ", Amenities: " + amenities;
     }
+
 }
