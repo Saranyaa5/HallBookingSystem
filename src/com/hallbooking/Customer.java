@@ -93,7 +93,7 @@ public class Customer extends User {
             switch (choice) {
                 case 1:
                     System.out.println("Searching halls...");
-                    
+                    search(sc);
                     break;
                 case 2:
                     System.out.println("Booking a hall...");
@@ -115,4 +115,35 @@ public class Customer extends User {
             }
         }
     }
+
+    private void search(Scanner sc) {
+        HallSearch search = new HallSearch();
+
+        while (true) {
+            System.out.println("\nSearch Options:");
+            System.out.println("1. Search by Date");
+            System.out.println("2. Search by Hall ID");
+            System.out.println("3. Search by Name");
+            System.out.println("4. Search by Capacity");
+            System.out.println("5. Search by Location");
+            System.out.println("6. Search by Amenities");
+            System.out.println("7. Show All Halls");
+            System.out.println("8. Exit");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1 -> search.searchByDate(sc);
+                case 2 -> search.searchById(sc);
+                case 3 -> search.searchByName(sc);
+                case 4 -> search.searchByCapacity(sc);
+                case 5 -> search.searchByLocation(sc);
+                case 6 -> search.searchByAmenities(sc);
+                case 7 -> search.showAllHalls();
+                case 8 -> { return; }
+                default -> System.out.println("Invalid choice! Try again.");
+            }
+        }
+    }
+	
 }
