@@ -50,13 +50,10 @@ public class Hall {
     public void addAvailableDate(String date) {
         availableDates.add(date);
     }
-
-    // Calculate price based on capacity and amenities
     public double calculatePrice() {
-        double basePricePerSeat = 50; // Base price per person
+        double basePricePerSeat = 50; 
         double totalPrice = capacity * basePricePerSeat;
 
-        // Additional charges for amenities
         if (amenities.contains("AC")) {
             totalPrice += 5000;
         }
