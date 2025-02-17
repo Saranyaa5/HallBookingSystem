@@ -1,6 +1,5 @@
 package com.hallbooking;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 public class Hall {
@@ -43,19 +42,49 @@ public class Hall {
     public boolean isAvailableOn(String date) {
         return availableDates.contains(date);
     }
-    
-    public Set<String> getAvailableDates(){
-    	return availableDates;
-    }
- 
 
+    public Set<String> getAvailableDates() {
+        return availableDates;
+    }
 
     public void addAvailableDate(String date) {
         availableDates.add(date);
     }
-    @Override
-    public String toString() {
-        return "Hall ID: " + hallId + ", Name: " + name + ", Capacity: " + capacity + ", Location: " + location + ", Amenities: " + amenities;
+
+    // Calculate price based on capacity and amenities
+    public double calculatePrice() {
+        double basePricePerSeat = 50; // Base price per person
+        double totalPrice = capacity * basePricePerSeat;
+
+        // Additional charges for amenities
+        if (amenities.contains("AC")) {
+            totalPrice += 5000;
+        }
+        if (amenities.contains("WiFi")) {
+            totalPrice += 2000;
+        }
+        if (amenities.contains("Parking")) {
+            totalPrice += 3000;
+        }
+        if (amenities.contains("Stage")) {
+            totalPrice += 4000;
+        }
+        if (amenities.contains("Valet")) {
+            totalPrice += 6000;
+        }
+        if (amenities.contains("Garden")) {
+            totalPrice += 7000;
+        }
+        if (amenities.contains("Terrace")) {
+            totalPrice += 8000;
+        }
+
+        return totalPrice;
     }
 
+    @Override
+    public String toString() {
+        return "Hall ID: " + hallId + ", Name: " + name + ", Capacity: " + capacity +
+                ", Location: " + location + ", Amenities: " + amenities + ", Price: ₹" + calculatePrice();
+    }
 }

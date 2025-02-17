@@ -1,6 +1,7 @@
 package com.hallbooking;
 import java.util.*;
-public class HallData{
+
+public class HallData {
     private static List<Hall> halls = new ArrayList<>();
 
     static {
@@ -19,4 +20,6 @@ public class HallData{
     public static List<Hall> getHalls() {
         return halls;
     }
+
+    
 }

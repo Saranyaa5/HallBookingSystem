@@ -2,8 +2,7 @@ package com.hallbooking;
 import java.util.*;
 
 public class Customer extends User {
-    private static HashMap<String, Customer> customerData = new HashMap<>(); // Key should be userId
-
+    private static HashMap<String, Customer> customerData = new HashMap<>(); 
     public Customer(String name, String userId, String email, String password) {
         super(name, userId, email, password);
     }
@@ -70,13 +69,15 @@ public class Customer extends User {
     }
 
     public void customerFunctionality(Scanner sc, Customer customer) {
+    	
         while (true) {
             System.out.println("\nChoose an option:");
             System.out.println("1. Search Hall");
             System.out.println("2. Book Hall using Hall ID");
             System.out.println("3. Cancel Booked Hall");
-            System.out.println("4. Make Payment");
-            System.out.println("5. Logout");
+            System.out.println("4. View pricing of halls");
+            System.out.println("5. Make Payment");
+            System.out.println("6. Logout");
             int choice = sc.nextInt();
             sc.nextLine();
 
@@ -84,8 +85,9 @@ public class Customer extends User {
                 case 1 -> search(sc);
                 case 2 -> booking(sc, customer);
                 case 3 -> cancelBooking(sc, customer);
-                case 4 -> System.out.println("Processing payment...");
-                case 5 -> {
+                case 4 -> viewHallPrice(sc);
+                case 5 -> makePayment(sc,customer);
+                case 6 -> {
                     System.out.println("Logging out...");
                     return;
                 }
@@ -93,8 +95,94 @@ public class Customer extends User {
             }
         }
     }
+    private void makePayment(Scanner sc, Customer customer) {
+        System.out.print("Enter Hall ID to make payment: ");
+        String hallId = sc.nextLine().trim();
+        System.out.print("Enter the date of booking (YYYY-MM-DD): ");
+        String bookingDate = sc.nextLine().trim();
 
-    private void booking(Scanner sc, Customer customer) {
+        String bookingKey = hallId + "-" + bookingDate;
+        BookingDetails bookingDetails = Booking.getBookings().get(bookingKey);
+
+        if (bookingDetails != null && bookingDetails.getCustomerId().equals(customer.getUserId())) {
+            if (bookingDetails.getAmtPaidStatus()) {
+                System.out.println("❌ Payment already made for this booking.");
+            } else {
+                
+                boolean paymentStatus = Payment.processPayment(sc, bookingDetails);
+
+                if (paymentStatus) {
+                    bookingDetails.setAmtPaidStatus(true);
+                    System.out.println("✅ Payment successful! Booking confirmed.");
+                } else {
+                    System.out.println("❌ Payment failed. Please try again.");
+                }
+            }
+        } else {
+            System.out.println("❌ No booking found with this Hall ID and Date.");
+        }
+    }
+
+
+
+    private void viewHallPrice(Scanner sc) {
+        while (true) {
+            System.out.println("1. See pricing for a specific hall");
+            System.out.println("2. Show all hall details");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            
+            int choice = sc.nextInt();
+            sc.nextLine(); 
+            
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Hall ID: ");
+                    String hallId = sc.nextLine().trim(); 
+                    
+                    boolean hallFound = false;
+                    for (Hall hall : HallData.getHalls()) {
+                        if (hall.getHallId().equalsIgnoreCase(hallId)) {
+                            System.out.println("\n--- Hall Pricing Details ---");
+                            System.out.println("Hall ID: " + hall.getHallId());
+                            System.out.println("Name: " + hall.getName());
+                            System.out.println("Capacity: " + hall.getCapacity());
+                            System.out.println("Location: " + hall.getLocation());
+                            System.out.println("Amenities: " + hall.getAmenities());
+                            System.out.println("Price: ₹" + hall.calculatePrice());
+                            hallFound = true;
+                            break;
+                        }
+                    }
+                    if (!hallFound) {
+                        System.out.println("Hall ID not found. Please enter a valid Hall ID.");
+                    }
+                    break;
+                
+                case 2:
+                    System.out.println("\n--- All Hall Pricing Details ---");
+                    for (Hall hall : HallData.getHalls()) {
+                        System.out.println("Hall ID: " + hall.getHallId());
+                        System.out.println("Name: " + hall.getName());
+                        System.out.println("Capacity: " + hall.getCapacity());
+                        System.out.println("Location: " + hall.getLocation());
+                        System.out.println("Amenities: " + hall.getAmenities());
+                        System.out.println("Price: ₹" + hall.calculatePrice());
+                        System.out.println("------------------------------");
+                    }
+                    break;
+                
+                case 3:
+                    System.out.println("Exiting Hall Pricing Menu 👋");
+                    return;
+                
+                default:
+                    System.out.println("Invalid choice! Please select a valid option.");
+            }
+        }
+    }
+
+	private void booking(Scanner sc, Customer customer) {
         Booking book = new Booking();
         boolean bookingSuccess = book.bookHall(sc, customer);
 
@@ -139,5 +227,10 @@ public class Customer extends User {
             }
         }
     }
+
+	 
+	
+	
+
 	
 }
