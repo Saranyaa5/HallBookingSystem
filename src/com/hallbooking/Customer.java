@@ -77,7 +77,7 @@ public class Customer extends User {
             System.out.println("3. Cancel Booked Hall");
             System.out.println("4. View pricing of halls");
             System.out.println("5. Make Payment");
-            System.out.println("6. Logout");
+            System.out.println("6. logout from customer section");
             int choice = sc.nextInt();
             sc.nextLine();
 
@@ -210,7 +210,7 @@ public class Customer extends User {
             System.out.println("5. Search by Location");
             System.out.println("6. Search by Amenities");
             System.out.println("7. Show All Halls");
-            System.out.println("8. Exit");
+            System.out.println("8. Exit search functionality");
             int choice = sc.nextInt();
             sc.nextLine();
 

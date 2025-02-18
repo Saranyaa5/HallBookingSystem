@@ -39,6 +39,7 @@ public class Hall {
         return location;
     }
 
+    
     public boolean isAvailableOn(String date) {
         return availableDates.contains(date);
     }
