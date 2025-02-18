@@ -9,123 +9,140 @@ public class Customer extends User {
 
     public void customerMenu(Scanner sc) {
         while (true) {
-            System.out.println("1. Register\n2. Login\n3. Exit");
-            int choice = sc.nextInt();
-            sc.nextLine();
+            try {
+                System.out.println("1. Register\n2. Login\n3. Exit");
+                int choice = sc.nextInt();
+                sc.nextLine();
 
-            switch (choice) {
-                case 1:
-                    register(sc);
-                    break;
-                case 2:
-                    login(sc);
-                    break;
-                case 3:
-                    System.out.println("Exiting customer section...");
-                    return;
-                default:
-                    System.out.println("Invalid choice! Try again.");
+                switch (choice) {
+                    case 1 -> register(sc);
+                    case 2 -> login(sc);
+                    case 3 -> {
+                        System.out.println("Exiting customer section...");
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice! Try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number.");
+                sc.nextLine(); 
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
             }
         }
     }
 
     private void register(Scanner sc) {
-        System.out.print("Enter Name: ");
-        String name = sc.nextLine();
-        System.out.print("Enter User ID: ");
-        String userId = sc.nextLine();
-        System.out.print("Enter Email: ");
-        String email = sc.nextLine();
-
-        if (customerData.containsKey(userId)) {
-            System.out.println("User ID already taken. Try another one.");
-            return;
-        }
-
-        System.out.print("Enter Password: ");
-        String password = sc.nextLine();
-
-        Customer newCustomer = new Customer(name, userId, email, password);
-        customerData.put(userId, newCustomer);
-        System.out.println("✅ Registration successful! Please login.");
-    }
-
-    private void login(Scanner sc) {
-        while (true) {
+        try {
+            System.out.print("Enter Name: ");
+            String name = sc.nextLine();
             System.out.print("Enter User ID: ");
             String userId = sc.nextLine();
+            System.out.print("Enter Email: ");
+            String email = sc.nextLine();
+
+            if (customerData.containsKey(userId)) {
+                System.out.println("User ID already taken. Try another one.");
+                return;
+            }
+
             System.out.print("Enter Password: ");
             String password = sc.nextLine();
 
-            Customer existingCustomer = customerData.get(userId);
-            if (existingCustomer != null && existingCustomer.authenticate(password)) {
-                System.out.println("✅ Login Successful! Welcome, " + existingCustomer.name);
-                customerFunctionality(sc, existingCustomer);
-                return;
-            } else {
-                System.out.println("❌ Incorrect credentials. Try again.");
+            Customer newCustomer = new Customer(name, userId, email, password);
+            customerData.put(userId, newCustomer);
+            System.out.println("✅ Registration successful! Please login.");
+        } catch (Exception e) {
+            System.out.println("Error occurred during registration: " + e.getMessage());
+        }
+    }
+
+    private void login(Scanner sc) {
+        try {
+            while (true) {
+                System.out.print("Enter User ID: ");
+                String userId = sc.nextLine();
+                System.out.print("Enter Password: ");
+                String password = sc.nextLine();
+
+                Customer existingCustomer = customerData.get(userId);
+                if (existingCustomer != null && existingCustomer.authenticate(password)) {
+                    System.out.println("✅ Login Successful! Welcome, " + existingCustomer.name);
+                    customerFunctionality(sc, existingCustomer);
+                    return;
+                } else {
+                    System.out.println("❌ Incorrect credentials. Try again.");
+                }
             }
+        } catch (Exception e) {
+            System.out.println("An error occurred during login: " + e.getMessage());
         }
     }
 
     public void customerFunctionality(Scanner sc, Customer customer) {
-    	
         while (true) {
-            System.out.println("\nChoose an option:");
-            System.out.println("1. Search Hall");
-            System.out.println("2. Book Hall using Hall ID");
-            System.out.println("3. Cancel Booked Hall");
-            System.out.println("4. View pricing of halls");
-            System.out.println("5. Make Payment");
-            System.out.println("6. logout from customer section");
-            int choice = sc.nextInt();
-            sc.nextLine();
+            try {
+                System.out.println("\nChoose an option:");
+                System.out.println("1. Search Hall\n2. Book Hall using Hall ID\n3. Cancel Booked Hall\n4. View pricing of halls\n5. Make Payment\n6. Logout from customer section");
+                int choice = sc.nextInt();
+                sc.nextLine();
 
-            switch (choice) {
-                case 1 -> search(sc);
-                case 2 -> booking(sc, customer);
-                case 3 -> cancelBooking(sc, customer);
-                case 4 -> viewHallPrice(sc);
-                case 5 -> makePayment(sc,customer);
-                case 6 -> {
-                    System.out.println("Logging out...");
-                    return;
+                switch (choice) {
+                    case 1 -> search(sc);
+                    case 2 -> booking(sc, customer);
+                    case 3 -> cancelBooking(sc, customer);
+                    case 4 -> viewHallPrice(sc);
+                    case 5 -> makePayment(sc, customer);
+                    case 6 -> {
+                        System.out.println("Logging out...");
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice! Try again.");
                 }
-                default -> System.out.println("Invalid choice! Try again.");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number.");
+                sc.nextLine(); 
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
             }
         }
     }
     private void makePayment(Scanner sc, Customer customer) {
-        System.out.print("Enter Hall ID to make payment: ");
-        String hallId = sc.nextLine().trim();
-        System.out.print("Enter the date of booking (YYYY-MM-DD): ");
-        String bookingDate = sc.nextLine().trim();
+        try {
+            System.out.print("Enter Hall ID to make payment: ");
+            String hallId = sc.nextLine().trim();
+            System.out.print("Enter the date of booking (YYYY-MM-DD): ");
+            String bookingDate = sc.nextLine().trim();
 
-        String bookingKey = hallId + "-" + bookingDate;
-        BookingDetails bookingDetails = Booking.getBookings().get(bookingKey);
+            String bookingKey = hallId + "-" + bookingDate;
+            BookingDetails bookingDetails = Booking.getBookings().get(bookingKey);
 
-        if (bookingDetails != null && bookingDetails.getCustomerId().equals(customer.getUserId())) {
-            if (bookingDetails.getAmtPaidStatus()) {
-                System.out.println("❌ Payment already made for this booking.");
-            } else {
-                
-                boolean paymentStatus = Payment.processPayment(sc, bookingDetails);
-
-                if (paymentStatus) {
-                    bookingDetails.setAmtPaidStatus(true);
-                    System.out.println("✅ Payment successful! Booking confirmed.");
+            if (bookingDetails != null && bookingDetails.getCustomerId().equals(customer.getUserId())) {
+                if (bookingDetails.getAmtPaidStatus()) {
+                    System.out.println("❌ Payment already made for this booking.");
                 } else {
-                    System.out.println("❌ Payment failed. Please try again.");
+                    boolean paymentStatus = Payment.processPayment(sc, bookingDetails);
+                    if (paymentStatus) {
+                        bookingDetails.setAmtPaidStatus(true);
+                        System.out.println("✅ Payment successful! Booking confirmed.");
+                    } else {
+                        System.out.println("❌ Payment failed. Please try again.");
+                    }
                 }
+            } else {
+                System.out.println("❌ No booking found with this Hall ID and Date.");
             }
-        } else {
-            System.out.println("❌ No booking found with this Hall ID and Date.");
+        } catch (NullPointerException e) {
+            System.out.println("Error: Invalid booking details. Please check your inputs.");
+        } catch (Exception e) {
+            System.out.println("An error occurred while processing the payment: " + e.getMessage());
         }
     }
 
 
 
     private void viewHallPrice(Scanner sc) {
+    	try {
         while (true) {
             System.out.println("1. See pricing for a specific hall");
             System.out.println("2. Show all hall details");
@@ -180,6 +197,14 @@ public class Customer extends User {
                     System.out.println("Invalid choice! Please select a valid option.");
             }
         }
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please enter a number.");
+            sc.nextLine();
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred during search: " + e.getMessage());
+        }
+    	
     }
 
 	private void booking(Scanner sc, Customer customer) {
@@ -198,35 +223,35 @@ public class Customer extends User {
         booking.cancelBooking(sc, customer);
     }
 
-	private void search(Scanner sc) {
-        HallSearch search = new HallSearch();
+    private void search(Scanner sc) {
+        try {
+            HallSearch search = new HallSearch();
+            while (true) {
+                System.out.println("\nSearch Options:");
+                System.out.println("1. Search by Date\n2. Search by Hall ID\n3. Search by Name\n4. Search by Capacity\n5. Search by Location\n6. Search by Amenities\n7. Show All Halls\n8. Exit search functionality");
+                int choice = sc.nextInt();
+                sc.nextLine();
 
-        while (true) {
-            System.out.println("\nSearch Options:");
-            System.out.println("1. Search by Date");
-            System.out.println("2. Search by Hall ID");
-            System.out.println("3. Search by Name");
-            System.out.println("4. Search by Capacity");
-            System.out.println("5. Search by Location");
-            System.out.println("6. Search by Amenities");
-            System.out.println("7. Show All Halls");
-            System.out.println("8. Exit search functionality");
-            int choice = sc.nextInt();
-            sc.nextLine();
-
-            switch (choice) {
-                case 1 -> search.searchByDate(sc);
-                case 2 -> search.searchById(sc);
-                case 3 -> search.searchByName(sc);
-                case 4 -> search.searchByCapacity(sc);
-                case 5 -> search.searchByLocation(sc);
-                case 6 -> search.searchByAmenities(sc);
-                case 7 -> search.showAllHalls();
-                case 8 -> { return; }
-                default -> System.out.println("Invalid choice! Try again.");
+                switch (choice) {
+                    case 1 -> search.searchByDate(sc);
+                    case 2 -> search.searchById(sc);
+                    case 3 -> search.searchByName(sc);
+                    case 4 -> search.searchByCapacity(sc);
+                    case 5 -> search.searchByLocation(sc);
+                    case 6 -> search.searchByAmenities(sc);
+                    case 7 -> search.showAllHalls();
+                    case 8 -> { return; }
+                    default -> System.out.println("Invalid choice! Try again.");
+                }
             }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please enter a number.");
+            sc.nextLine();
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred during search: " + e.getMessage());
         }
     }
+    
 
 	 
 	
