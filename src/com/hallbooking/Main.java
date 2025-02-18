@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-            System.out.println("Enter the application as:\n1. Customer\n2. Admin\n3. Exit");
+        while(true) {
+            System.out.println("Enter the application as:\n1. Customer\n2. Admin\n3. Exit the application");
             int userType = sc.nextInt();
             sc.nextLine(); 
 
@@ -26,5 +27,6 @@ public class Main {
                 default:
                     System.out.println("Invalid choice! Please enter 1, 2, or 3.");
             }
+        }
     }
 }

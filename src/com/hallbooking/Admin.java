@@ -19,6 +19,7 @@ public class Admin extends User {
         if (username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
             System.out.println("Login Successful.");
             adminFunctionality(sc);
+            
         } 
         else {
             System.out.println("Incorrect Username or Password.");
