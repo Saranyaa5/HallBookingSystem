@@ -51,7 +51,7 @@ public class Customer extends User {
 
             Customer newCustomer = new Customer(name, userId, email, password);
             customerData.put(userId, newCustomer);
-            System.out.println("✅ Registration successful! Please login.");
+            System.out.println("Registration successful! Please login.");
         } catch (Exception e) {
             System.out.println("Error occurred during registration: " + e.getMessage());
         }
@@ -71,7 +71,7 @@ public class Customer extends User {
                     customerFunctionality(sc, existingCustomer);
                     return;
                 } else {
-                    System.out.println("❌ Incorrect credentials. Try again.");
+                    System.out.println("Incorrect credentials. Try again.");
                 }
             }
         } catch (Exception e) {
@@ -119,18 +119,18 @@ public class Customer extends User {
 
             if (bookingDetails != null && bookingDetails.getCustomerId().equals(customer.getUserId())) {
                 if (bookingDetails.getAmtPaidStatus()) {
-                    System.out.println("❌ Payment already made for this booking.");
+                    System.out.println("Payment already made for this booking.");
                 } else {
                     boolean paymentStatus = Payment.processPayment(sc, bookingDetails);
                     if (paymentStatus) {
                         bookingDetails.setAmtPaidStatus(true);
-                        System.out.println("✅ Payment successful! Booking confirmed.");
+                        System.out.println("Payment successful! Booking confirmed.");
                     } else {
-                        System.out.println("❌ Payment failed. Please try again.");
+                        System.out.println("Payment failed. Please try again.");
                     }
                 }
             } else {
-                System.out.println("❌ No booking found with this Hall ID and Date.");
+                System.out.println("No booking found with this Hall ID and Date.");
             }
         } catch (NullPointerException e) {
             System.out.println("Error: Invalid booking details. Please check your inputs.");
@@ -212,9 +212,9 @@ public class Customer extends User {
         boolean bookingSuccess = book.bookHall(sc, customer);
 
         if (bookingSuccess) {
-            System.out.println("✅ Booking confirmed!");
+            System.out.println("Booking confirmed!");
         } else {
-            System.out.println("❌ Booking failed. The hall might already be booked.");
+            System.out.println("Booking failed. The hall might already be booked.");
         }
     }
 

@@ -21,10 +21,10 @@ public class Admin extends User {
                 System.out.println("Login Successful.");
                 adminFunctionality(sc);
             } else {
-                System.out.println("❌ Incorrect Username or Password.");
+                System.out.println("Incorrect Username or Password.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Unexpected error: " + e.getMessage());
+            System.out.println("Unexpected error: " + e.getMessage());
         }
     }
 
@@ -59,13 +59,13 @@ public class Admin extends User {
                         System.out.println("Logging out...");
                         return;
                     default:
-                        System.out.println("❌ Invalid choice. Try again.");
+                        System.out.println("Invalid choice. Try again.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("❌ Invalid input. Please enter a number.");
+                System.out.println("Invalid input. Please enter a number.");
                 sc.nextLine();
             } catch (Exception e) {
-                System.out.println("❌ Unexpected error: " + e.getMessage());
+                System.out.println("Unexpected error: " + e.getMessage());
             }
         }
     }
@@ -96,9 +96,9 @@ public class Admin extends User {
             Hall newHall = new Hall(hallId, hallName, capacity, amenities, location, availableDates);
             HallData.getHalls().add(newHall);
 
-            System.out.println("✅ Hall added successfully.");
+            System.out.println("Hall added successfully.");
         } catch (Exception e) {
-            System.out.println("❌ Error adding hall: " + e.getMessage());
+            System.out.println("Error adding hall: " + e.getMessage());
         }
     }
 
@@ -115,17 +115,17 @@ public class Admin extends User {
                 Hall hall = iterator.next();
                 if (hall.getHallId().equalsIgnoreCase(hallId)) {
                     iterator.remove();
-                    System.out.println("✅ Hall deleted successfully.");
+                    System.out.println("Hall deleted successfully.");
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                System.out.println("❌ Hall not found.");
+                System.out.println("Hall not found.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error deleting hall: " + e.getMessage());
+            System.out.println("Error deleting hall: " + e.getMessage());
         }
     }
 
@@ -139,7 +139,7 @@ public class Admin extends User {
                 .findFirst().orElse(null);
 
             if (selectedHall == null) {
-                System.out.println("❌ Hall ID not found.");
+                System.out.println("Hall ID not found.");
                 return;
             }
 
@@ -147,7 +147,7 @@ public class Admin extends User {
             String date = sc.nextLine();
 
             if (!selectedHall.isAvailableOn(date)) {
-                System.out.println("❌ Hall is not available on this date.");
+                System.out.println("Hall is not available on this date.");
                 return;
             }
 
@@ -157,9 +157,9 @@ public class Admin extends User {
             selectedHall.getAvailableDates().remove(date);
             reservations.computeIfAbsent(hallId, k -> new ArrayList<>()).add("Reserved by " + customerName + " on " + date);
 
-            System.out.println("✅ Hall reserved successfully for " + customerName + " on " + date);
+            System.out.println("Hall reserved successfully for " + customerName + " on " + date);
         } catch (Exception e) {
-            System.out.println("❌ Error reserving hall: " + e.getMessage());
+            System.out.println("Error reserving hall: " + e.getMessage());
         }
     }
     
