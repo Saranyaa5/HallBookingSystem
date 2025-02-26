@@ -115,17 +115,17 @@ public class Admin extends User {
                 Hall hall = iterator.next();
                 if (hall.getHallId().equalsIgnoreCase(hallId)) {
                     iterator.remove();
-                    System.out.println("✅ Hall deleted successfully.");
+                    System.out.println("Hall deleted successfully.");
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                System.out.println("❌ Hall not found.");
+                System.out.println("Hall not found.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error deleting hall: " + e.getMessage());
+            System.out.println("Error deleting hall: " + e.getMessage());
         }
     }
 
@@ -139,7 +139,7 @@ public class Admin extends User {
                 .findFirst().orElse(null);
 
             if (selectedHall == null) {
-                System.out.println("❌ Hall ID not found.");
+                System.out.println("Hall ID not found.");
                 return;
             }
 
@@ -147,7 +147,7 @@ public class Admin extends User {
             String date = sc.nextLine();
 
             if (!selectedHall.isAvailableOn(date)) {
-                System.out.println("❌ Hall is not available on this date.");
+                System.out.println("Hall is not available on this date.");
                 return;
             }
 
@@ -157,9 +157,9 @@ public class Admin extends User {
             selectedHall.getAvailableDates().remove(date);
             reservations.computeIfAbsent(hallId, k -> new ArrayList<>()).add("Reserved by " + customerName + " on " + date);
 
-            System.out.println("✅ Hall reserved successfully for " + customerName + " on " + date);
+            System.out.println("Hall reserved successfully for " + customerName + " on " + date);
         } catch (Exception e) {
-            System.out.println("❌ Error reserving hall: " + e.getMessage());
+            System.out.println("Error reserving hall: " + e.getMessage());
         }
     }
     
@@ -191,7 +191,7 @@ public class Admin extends User {
                 if (reservations != null && reservations.containsKey(hall.getHallId())) {
                     System.out.println("   Reservations: " + reservations.get(hall.getHallId()));
                 } else {
-                    System.out.println("   No reservations yet.");
+                    System.out.println("No reservations yet.");
                 }
             }
         } catch (Exception e) {

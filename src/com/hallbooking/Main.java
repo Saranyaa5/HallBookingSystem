@@ -33,6 +33,7 @@ public class Main {
                     case 2:
                         try {
                             Admin admin = new Admin("", "", "", "");
+                            
                             admin.adminMenu(sc);
                         } catch (Exception e) {
                             System.out.println("An error occurred in the Admin menu: " + e.getMessage());

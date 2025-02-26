@@ -71,6 +71,7 @@ public class HallSearch {
             System.out.println("Enter maximum capacity required: ");
             int capacity = sc.nextInt();
             sc.nextLine(); 
+            
 
             List<Hall> suitableHalls = new ArrayList<>();
             for (Hall hall : halls) {
