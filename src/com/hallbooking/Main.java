@@ -1,11 +1,25 @@
 package com.hallbooking;
-
-import java.util.InputMismatchException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc;
+        File file = new File(System.getProperty("user.dir") + "/flow1.txt");
+
+        if (file.exists()) {
+            try {
+                sc = new Scanner(file);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found. Switching to manual input.");
+                sc = new Scanner(System.in);
+            }
+        } else {
+            System.out.println("flow1.txt not found. Using manual input.");
+            sc = new Scanner(System.in);
+        }
 
         try {
             while (true) {
@@ -14,7 +28,7 @@ public class Main {
                 int userType;
                 try {
                     userType = sc.nextInt();
-                    sc.nextLine(); 
+                    sc.nextLine();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input! Please enter a valid number (1, 2, or 3).");
                     sc.nextLine();
@@ -27,16 +41,15 @@ public class Main {
                             Customer customer = new Customer("", "", "", "");
                             customer.customerMenu(sc);
                         } catch (Exception e) {
-                            System.out.println("An error occurred in the Customer menu: " + e.getMessage());
+                            System.out.println("Error in Customer menu: " + e.getMessage());
                         }
                         break;
                     case 2:
                         try {
                             Admin admin = new Admin("", "", "", "");
-                            
                             admin.adminMenu(sc);
                         } catch (Exception e) {
-                            System.out.println("An error occurred in the Admin menu: " + e.getMessage());
+                            System.out.println("Error in Admin menu: " + e.getMessage());
                         }
                         break;
                     case 3:
@@ -51,7 +64,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Unexpected error occurred: " + e.getMessage());
+            System.out.println("Unexpected error: " + e.getMessage());
         } finally {
             sc.close();
         }
