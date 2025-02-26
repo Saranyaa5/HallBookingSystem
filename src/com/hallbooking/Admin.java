@@ -21,10 +21,10 @@ public class Admin extends User {
                 System.out.println("Login Successful.");
                 adminFunctionality(sc);
             } else {
-                System.out.println("❌ Incorrect Username or Password.");
+                System.out.println("Incorrect Username or Password.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Unexpected error: " + e.getMessage());
+            System.out.println("Unexpected error: " + e.getMessage());
         }
     }
 
@@ -59,13 +59,13 @@ public class Admin extends User {
                         System.out.println("Logging out...");
                         return;
                     default:
-                        System.out.println("❌ Invalid choice. Try again.");
+                        System.out.println("Invalid choice. Try again.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("❌ Invalid input. Please enter a number.");
+                System.out.println("Invalid input. Please enter a number.");
                 sc.nextLine();
             } catch (Exception e) {
-                System.out.println("❌ Unexpected error: " + e.getMessage());
+                System.out.println("Unexpected error: " + e.getMessage());
             }
         }
     }
@@ -96,9 +96,9 @@ public class Admin extends User {
             Hall newHall = new Hall(hallId, hallName, capacity, amenities, location, availableDates);
             HallData.getHalls().add(newHall);
 
-            System.out.println("✅ Hall added successfully.");
+            System.out.println("Hall added successfully.");
         } catch (Exception e) {
-            System.out.println("❌ Error adding hall: " + e.getMessage());
+            System.out.println("Error adding hall: " + e.getMessage());
         }
     }
 

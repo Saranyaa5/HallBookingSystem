@@ -17,7 +17,7 @@ public class Booking {
             String hallId = sc.nextLine().trim();
 
             if (hallId.isEmpty()) {
-                throw new IllegalArgumentException("❌ Hall ID cannot be empty.");
+                throw new IllegalArgumentException("Hall ID cannot be empty.");
             }
 
             Hall selectedHall = null;
@@ -29,12 +29,12 @@ public class Booking {
             }
 
             if (selectedHall == null) {
-                throw new NoSuchElementException("❌ Hall ID not found.");
+                throw new NoSuchElementException("Hall ID not found.");
             }
 
             Set<String> availableDates = selectedHall.getAvailableDates();
             if (availableDates.isEmpty()) {
-                throw new IllegalStateException("❌ No available dates for this hall.");
+                throw new IllegalStateException("No available dates for this hall.");
             }
 
             System.out.println("Available Dates: " + availableDates);
@@ -42,12 +42,12 @@ public class Booking {
             String bookingDate = sc.nextLine().trim();
 
             if (!availableDates.contains(bookingDate)) {
-                throw new IllegalArgumentException("❌ Invalid date. Please enter a valid date from the available dates.");
+                throw new IllegalArgumentException("Invalid date. Please enter a valid date from the available dates.");
             }
 
             String bookingKey = hallId + "-" + bookingDate;
             if (bookings.containsKey(bookingKey)) {
-                throw new IllegalStateException("❌ Hall is already booked on this date.");
+                throw new IllegalStateException("Hall is already booked on this date.");
             }
 
             BookingDetails bookingDetails = new BookingDetails(hallId, bookingDate, customer.getUserId(), bookingKey);
@@ -55,7 +55,7 @@ public class Booking {
 
             bookingCount.put(hallId, bookingCount.getOrDefault(hallId, 0) + 1);
 
-            System.out.println("✅ Booking confirmed for Hall ID " + hallId + " on " + bookingDate + " by " + customer.getUserName());
+            System.out.println("Booking confirmed for Hall ID " + hallId + " on " + bookingDate + " by " + customer.getUserName());
             return true;
 
         } catch (IllegalArgumentException e) {
@@ -65,7 +65,7 @@ public class Booking {
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
-            System.out.println("❌ An unexpected error occurred: " + e.getMessage());
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
         return false;
     }
@@ -78,7 +78,7 @@ public class Booking {
             String bookingDate = sc.nextLine().trim();
 
             if (hallId.isEmpty() || bookingDate.isEmpty()) {
-                throw new IllegalArgumentException("❌ Hall ID and Date cannot be empty.");
+                throw new IllegalArgumentException("Hall ID and Date cannot be empty.");
             }
 
             String bookingKey = hallId + "-" + bookingDate;
@@ -89,9 +89,9 @@ public class Booking {
 
                 bookingCount.put(hallId, Math.max(bookingCount.getOrDefault(hallId, 0) - 1, 0));
 
-                System.out.println("✅ Booking canceled successfully!");
+                System.out.println("Booking canceled successfully!");
             } else {
-                throw new NoSuchElementException("❌ No matching booking found.");
+                throw new NoSuchElementException("No matching booking found.");
             }
 
         } catch (IllegalArgumentException e) {
@@ -99,7 +99,7 @@ public class Booking {
         } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
-            System.out.println("❌ An unexpected error occurred: " + e.getMessage());
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
     }
 

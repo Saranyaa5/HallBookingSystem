@@ -26,11 +26,11 @@ public class Payment {
             try {
                 paymentMethod = sc.nextInt();
                 if (paymentMethod < 1 || paymentMethod > 3) {
-                    System.out.println("❌ Invalid payment method selected. Please try again.");
+                    System.out.println("Invalid payment method selected. Please try again.");
                     return false;
                 }
             } catch (Exception e) {
-                System.out.println("❌ Invalid input. Please enter a number (1-3) for payment method.");
+                System.out.println("Invalid input. Please enter a number (1-3) for payment method.");
                 sc.nextLine(); 
                 return false;
             }
@@ -41,24 +41,24 @@ public class Payment {
             try {
                 amountPaid = sc.nextDouble();
             } catch (Exception e) {
-                System.out.println("❌ Invalid amount entered. Please enter a valid number.");
+                System.out.println("Invalid amount entered. Please enter a valid number.");
                 sc.nextLine(); 
                 return false;
             }
 
             if (amountPaid > price) {
-                System.out.println("✅ Payment of ₹" + price + " successful!");
+                System.out.println("Payment of ₹" + price + " successful!");
                 System.out.println("Sent balance ₹" + (amountPaid - price) + " to " + bookingDetails.getCustomerId());
                 return true;
             } else if (amountPaid == price) {
-                System.out.println("✅ Payment of ₹" + amountPaid + " successful!");
+                System.out.println("Payment of ₹" + amountPaid + " successful!");
                 return true;
             } else {
-                System.out.println("❌ Insufficient amount. Payment failed.");
+                System.out.println("Insufficient amount. Payment failed.");
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("❌ An unexpected error occurred during payment: " + e.getMessage());
+            System.out.println("An unexpected error occurred during payment: " + e.getMessage());
             return false;
         }
     }
@@ -71,7 +71,7 @@ public class Payment {
                 }
             }
         } catch (Exception e) {
-            System.out.println("❌ Error retrieving hall details: " + e.getMessage());
+            System.out.println("Error retrieving hall details: " + e.getMessage());
         }
         return null;
     }
