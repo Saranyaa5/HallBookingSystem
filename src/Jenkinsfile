@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        // Set environment variables if needed
+        NODE_ENV = 'production'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Saranyaa5/HallBookingSystem.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install' // Install Node.js dependencies
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'npm test' // Run tests if applicable
+            }
+        }
+
+        stage('Build Project') {
+            steps {
+                sh 'npm run build' // Build the project if applicable
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'npm start' // Start the application
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
