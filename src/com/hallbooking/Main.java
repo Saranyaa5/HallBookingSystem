@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 public class Main {
     public static void main(String[] args) {
         Scanner sc;
-        File file = new File(System.getProperty("user.dir") + "/flow1.txt");
+        File file = new File(System.getProperty("user.dir") + "/flow2.txt");
 
         if (file.exists()) {
             try {
@@ -64,7 +64,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             sc.close();
         }
